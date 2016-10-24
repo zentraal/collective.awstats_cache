@@ -2,6 +2,7 @@ import urllib
 from plone.app.layout.viewlets.common import ViewletBase
 from collective.awstats_cache import Session
 from zope.component import getMultiAdapter
+COLUMNS = ['id', 'entry', 'bandwidth', 'exit', 'pages', 'last_changes']
 
 
 class AwstatsStatisticsViewlet(ViewletBase):
@@ -17,9 +18,9 @@ class AwstatsStatisticsViewlet(ViewletBase):
         quoted_url = urllib.quote(url)
 
         results = Session.execute(
-            'SELECT * FROM statistics WHERE url="%s"' % quoted_url)
-        if len(results) > 0:
-            return results[0]
+            'SELECT * FROM statistics WHERE url="%s"' % quoted_url).fetchone()
+        if results:
+            return dict(zip(COLUMNS, results))
         return {
             'entry': 0,
             'bandwidth': 0,
