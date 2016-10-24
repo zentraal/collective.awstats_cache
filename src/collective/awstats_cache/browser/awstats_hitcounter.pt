@@ -1,0 +1,19 @@
+<div id="awstats_hitcounter">
+<div class="row-fluid">
+<div class="span12 collective-awstats-heading">
+
+      <div class="page-info">Page Information</div>
+     <div class="rule2"></div>
+
+
+</div>
+</div>
+<div class="row-fluid">
+<div class="span6 collective-awstats-views" tal:define="statistics view/get_statistics">
+
+      <div class="page-info awstats-page-views">Page Views:<span class="page-views" tal:content="statistics/pages"></span></div>
+      <div class="page-info awstats-page-hits">Hits:<span class="page-hits" tal:content="statistics/hits"></span></div>
+      <div style="display:none" class="page-info awstats-downloads">Attachments Downloaded:<span class="attachment-downloads"></span></div>
+
+</div>
+</div>
