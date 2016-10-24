@@ -2,9 +2,7 @@
 
 from sqlalchemy import schema, types
 from sqlalchemy import Table
-from sqlalchemy import PrimaryKeyConstraint
-from sqlalchemy import ForeignKeyConstraint
-from collective.awstat_cache import ORMBase
+from collective.awstats_cache import ORMBase
 
 
 metadata = ORMBase.metadata
@@ -23,7 +21,7 @@ class Statistics(ORMBase):
     last_changes = schema.Column(types.String(20))
 
     def __init__(self, url, entry, bandwidth, exit, pages, last_changes):
-         
+
         self.url = url
         self.entry = entry
         self.bandwidth = bandwidth
@@ -33,4 +31,3 @@ class Statistics(ORMBase):
 
 
 statistics = Table('statistics', metadata)
-
