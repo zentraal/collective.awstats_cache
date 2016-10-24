@@ -20,4 +20,9 @@ class AwstatsStatisticsViewlet(ViewletBase):
             'SELECT * FROM statistics WHERE url="%s"' % quoted_url)
         if len(results) > 0:
             return results[0]
-        return {}
+        return {
+            'entry': 0,
+            'bandwidth': 0,
+            'exit': 0,
+            'pages': 0
+        }

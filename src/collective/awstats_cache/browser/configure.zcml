@@ -2,15 +2,30 @@
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:plone="http://namespaces.plone.org/plone"
+    xmlns:zcml="http://namespaces.zope.org/zcml"
     i18n_domain="collective.awstats_cache">
 
-  <!-- The awstats statistics info -->
-  <browser:viewlet
-      name="plone.belowcontentbody.relateditems"
-      manager="plone.app.layout.viewlets.interfaces.IBelowContentBody"
-      class=".viewlets.AwstatsStatisticsViewlet"
-      permission="zope2.View"
-      layer="collective.awstats_cache.interfaces.ICollectiveAwstatsCacheLayer"
-      />
+  <configure zcml:condition="not-installed collective.awstats_hitcounter">
+      <!-- The awstats statistics info -->
+      <browser:viewlet
+          name="awstats_hitcounter_cache"
+          manager="plone.app.layout.viewlets.interfaces.IPortalFooter"
+          class=".viewlets.AwstatsStatisticsViewlet"
+          template="awstats_hitcounter.pt"
+          permission="zope2.View"
+          layer="collective.awstats_cache.interfaces.ICollectiveAwstatsCacheLayer"
+          />
+  </configure>
+
+  <configure zcml:condition="installed collective.awstats_hitcounter">
+      <browser:viewlet
+          name="collective.awstats_hitcounter"
+          manager="plone.app.layout.viewlets.interfaces.IPortalFooter"
+          class=".viewlets.AwstatsStatisticsViewlet"
+          template="awstats_hitcounter.pt"
+          layer="collective.awstats_cache.interfaces.ICollectiveAwstatsCacheLayer"
+          permission="zope2.View"
+          />
+  </configure>
 
 </configure>
