@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 """Module where all interfaces, events and exceptions live."""
-
-from zope.publisher.interfaces.browser import IDefaultBrowserLayer
+try:
+    from collective.awstats_hitcounter.interfaces import ICollectiveAwstatsHitcounterLayer as IDefaultBrowserLayer
+except:
+    from zope.publisher.interfaces.browser import IDefaultBrowserLayer
 
 
 class ICollectiveAwstatsCacheLayer(IDefaultBrowserLayer):
