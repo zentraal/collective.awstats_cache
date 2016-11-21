@@ -11,13 +11,13 @@
 <div class="row-fluid">
 <div class="span6 collective-awstats-views" tal:define="statistics view/get_statistics">
 
-      <div class="page-info awstats-page-views">Page Views:<span class="page-views" tal:content="statistics/pages"></span></div>
-      <div class="page-info awstats-page-hits">Hits:<span class="page-hits" tal:content="statistics/bandwidth"></span></div>
-      <div style="display:none" class="page-info awstats-downloads">Attachments Downloaded:<span class="attachment-downloads"></span></div>
+      <div class="page-info awstats-page-views">Page Views: <span class="page-views" tal:content="statistics/pages"></span></div>
+      <div class="page-info awstats-page-hits">Hits: <span class="page-hits" tal:content="statistics/bandwidth"></span></div>
+      <div style="display:none" class="page-info awstats-downloads">Attachments Downloaded: <span class="attachment-downloads"></span></div>
 
 </div>
 <div class="span6 collective-awstats-dates" tal:define="toLocalizedTime nocall: context/@@plone/toLocalizedTime;">
-      <div class="page-info awstats-date-created">Date Created:<span class="date-created" tal:content="python:toLocalizedTime(context.CreationDate())"></span></div>
-      <div class="page-info awstats-date-modified">Date Modified:<span class="date-modified" tal:content="python:toLocalizedTime(context.ModificationDate())"></span></div>
+      <div class="page-info awstats-date-created">Date Created: <span class="date-created" tal:content="python:toLocalizedTime(context.CreationDate())"></span></div>
+      <div class="page-info awstats-date-modified">Date Modified: <span class="date-modified" tal:content="python:toLocalizedTime(context.ModificationDate())"></span></div>
 </div>
 </div>
