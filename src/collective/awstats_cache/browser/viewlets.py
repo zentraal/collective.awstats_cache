@@ -41,14 +41,13 @@ class AwstatsStatisticsViewlet(ViewletBase):
         query = 'SELECT * FROM statistics WHERE url IN %s' % str(tuple(urls))
         results = Session.execute(query).fetchall()
         if results:
-            for row in rows_stat:
+            for row in results:
                 for key in statistics.keys():
                     statistics[key] = statistics[key] + int(row[key])
 
             results_dw = Session.execute(
                 'SELECT * FROM statistics WHERE url="%s/at_download%%"' % quoted_url).fetchall()
             if results_dw:
-                downloads = statistics.copy
                 for row in rows_stat:
                     for key in statistics.keys():
                         downloads[key] = downloads[key] + int(row[key])
