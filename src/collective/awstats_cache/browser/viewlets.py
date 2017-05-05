@@ -20,6 +20,9 @@ class AwstatsStatisticsViewlet(ViewletBase):
         portal_state = getMultiAdapter(
             (self.context, self.request), name=u'plone_portal_state'
         )
+        context_state = getMultiAdapter(
+            (self.context, self.request), name=u'plone_context_state'
+        )
         site = portal_state.portal()
         
         url = self.context.absolute_url().replace(site.absolute_url(), '')
