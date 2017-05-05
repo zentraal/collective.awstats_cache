@@ -2,7 +2,6 @@ import urllib
 from plone.app.layout.viewlets.common import ViewletBase
 from collective.awstats_cache import Session
 from zope.component import getMultiAdapter
-COLUMNS = ['id', 'entry', 'bandwidth', 'exit', 'pages', 'last_changes']
 
 
 class AwstatsStatisticsViewlet(ViewletBase):
@@ -16,6 +15,8 @@ class AwstatsStatisticsViewlet(ViewletBase):
             'exit': 0,
             'pages': 0
         }
+        downloads = statistics.copy()
+        
         portal_state = getMultiAdapter(
             (self.context, self.request), name=u'plone_portal_state'
         )
@@ -24,15 +25,19 @@ class AwstatsStatisticsViewlet(ViewletBase):
         if url == '':
            url = '/'
         quoted_url = urllib.quote(url)
-
-        results = Session.execute(
-            'SELECT * FROM statistics WHERE url="%s"' % quoted_url).fetchone()
+        query = 'SELECT * FROM statistics WHERE url LIKE "%s%%"' % quoted_url
+        results = Session.execute(query).fetchall()
         if results:
-            statistics = dict(zip(COLUMNS, results))
-        if statistics and self.context.portal_type == "File":
+            for row in rows_stat:
+                for key in statistics.keys():
+                    statistics[key] = statistics[key] + int(row[key])
+
             results_dw = Session.execute(
-                'SELECT * FROM statistics WHERE url="%s"' % quoted_url).fetchone()
+                'SELECT * FROM statistics WHERE url="%s/at_download%%"' % quoted_url).fetchall()
             if results_dw:
-                downloads = dict(zip(COLUMNS, results_dw))
+                downloads = statistics.copy
+                for row in rows_stat:
+                    for key in statistics.keys():
+                        downloads[key] = downloads[key] + int(row[key])
                 statistics['downloads'] = downloads['pages']
         return statistics
