@@ -21,11 +21,21 @@ class AwstatsStatisticsViewlet(ViewletBase):
             (self.context, self.request), name=u'plone_portal_state'
         )
         site = portal_state.portal()
+        
         url = self.context.absolute_url().replace(site.absolute_url(), '')
+        urls = []
         if url == '':
            url = '/'
         quoted_url = urllib.quote(url)
-        query = 'SELECT * FROM statistics WHERE url LIKE "%s%%"' % quoted_url
+        
+        urls.append(quoted_url)
+        urls.append(quoted_url + '/view')
+        canonical_url = urllib.quote(context_state.canonical_object_url())
+        if canonical_url not in urls:
+           urls.append(canonical_url)
+           urls.append(canonical_url + '/view')
+
+        query = 'SELECT * FROM statistics WHERE url IN %s' % str(tuple(urls))
         results = Session.execute(query).fetchall()
         if results:
             for row in rows_stat:
